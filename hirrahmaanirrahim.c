@@ -74,3 +74,5 @@ void petunjukpermainan1 (){
 	printf ("\nSelamat bermain, untuk melanjutkan ketik 1 dan enter");
 }
 
+//ciajidun
+
