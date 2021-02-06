@@ -75,4 +75,4 @@ void petunjukpermainan1 (){
 }
 
 //ciajidun
-
+//kau sudah paham
