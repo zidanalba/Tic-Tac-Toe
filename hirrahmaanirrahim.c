@@ -3,30 +3,32 @@
 
 void board ();
 int petunjukpermainan1 ();
-void petunjukpermainan2 ();
+int petunjukpermainan2 ();
 void mainmenu();
 //procedure mainmenu(output modepermainan : integer)
 char square[10] = {'o','1','2','3','4','5','6','7','8','9'};
 
 int main (){
 
-	int modepermainan;
-	void board();	
+	int modepermainan;	
 	
 	printf ("\n\nHallo, Selamat Datang!\nKetik apa saja dan tekan enter untuk melanjutkan ke Main Menu");
 
 	
-	mainmenu(&modepermainan);
+	menu : mainmenu();
 	scanf ("%d", &modepermainan);
 	
 	if (modepermainan == 1){
+		//DEKLARASI
 		int player = 1,i,choice;
 		char mark;
 		int pemenang;
 		int skorplayer1;
 		int skorplayer2;
+		int judgementcalls;
 		void checkwin (int player, int* pemenang);
-		void skormode1 (int* pemenang, int* skorplayer1, int* skorplayer2);
+		void skormode1 (int pemenang, int* skorplayer1, int* skorplayer2);
+		void scorejudge (int* judgementcalls, int* skorplayer1, int* skorplayer2);
 		
 		mark=(player == 1) ? 'X' : 'O';
 		
@@ -34,8 +36,8 @@ int main (){
 		scanf ("\n%d");
 		
 		do {
-		board ();
-		skormode1 (&pemenang,&skorplayer1,&skorplayer2);
+		rematch : board ();
+		skormode1 (pemenang,&skorplayer1,&skorplayer2);
 		pemenang = 0;
         player=(player%2)?1:2;
         printf ("\n\nPlayer %d masukkan nomor : ", player);
@@ -80,20 +82,94 @@ int main (){
 		
 		if (pemenang == 1){
 			printf ("Selamat! Player %d menang!", pemenang);
+			pemenang = 0;
 		}
 		if (pemenang == 2){
 			printf ("Selamat! Player %d menang!", pemenang);
+			pemenang = 0;
 		}
 		if (pemenang == 3){
 			printf ("Kalian sama kuat, hasilnya seri!");
+			pemenang = 0;
 		}
 		
 		player++;
 //		printf ("\n\n %d", pemenang);
-//		scanf ("%d");		
-		} while (pemenang==0);
+//		scanf ("%d");
+		
+		scorejudge (&skorplayer1,&skorplayer2,&judgementcalls);
+		} while (judgementcalls==0);
+		int lanjut;
+		system ("cls");
+		if (judgementcalls == 1 || judgementcalls == 2){
+			printf ("\n\n\nSELAMAT PLAYER %d TELAH MEMENANGKAN GAME INI!\n\n", &judgementcalls);
+			printf ("Silakan ketik angkanya untuk melanjutkan\n1. Rematch\n2. Main Menu\n3.Exit");
+			scanf ("%d", &lanjut);
+		if (judgementcalls == 3){
+			
+		}
+			if (lanjut == 1){
+				goto rematch;
+			}
+			else if (lanjut == 2){
+				goto menu;
+			}
+			else if (lanjut == 3){
+				return 0;
+			}
+			else {
+				printf ("\nAngka tidak valid");
+			}
+		}
+		if (judgementcalls == 3){
+			printf ("\n\n\nKEDUA PLAYER SAMA KUAT! HASILNYA SERI!\n\n");
+			
+		}
 	}
 	else if (modepermainan == 2){
+		int level;
+		
+		petunjukpermainan2 ();
+		scanf ("\n%s");
+		
+		system ("cls");
+		printf ("\n\n1. Easy\n2. Medium\n3. Hard");
+		printf ("\nPilih Tingkat Kesulitan : ");
+		scanf ("%d", &level);
+		
+		if (level == 1){
+			void comeasy ();
+			int player = 1,i,choice;
+			char mark;
+			int pemenang;
+			int skorplayer1;
+			int skorplayer2;
+			void checkwin (int player, int* pemenang);
+			void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2);
+			
+			do{
+				board ();
+				skormode2(pemenang,&skorplayer1,&skorplayer2);
+				pemenang = 0;
+				player=(player%2)?1:2;
+	        printf ("\n\nPlayer %d masukkan nomor : ", player);
+	        scanf ("%d", &choice);
+				
+				
+			}while(pemenang == 0);
+				
+			
+		}
+		if (level == 2){
+			
+		}
+		if (level == 3){
+			
+		}
+//		else {
+//			printf ("\n\nNomor Level tidak valid");
+//		}
+		
 		
 	}
 	else if (modepermainan == 3){
@@ -179,23 +255,66 @@ void checkwin (int player, int *pemenang){
 	
 }
 
-void skormode1 (int* pemenang, int* skorplayer1, int* skorplayer2){
+void skormode1 (int pemenang, int* skorplayer1, int* skorplayer2){
 	*skorplayer1 = 4;
 	*skorplayer2 = 4;
 	
-	if (*pemenang = 1){
+	if (pemenang == 1){
 		skorplayer1 = skorplayer1 + 4;
 		skorplayer2 = skorplayer2 - 2;
 	}
-	if (*pemenang = 2){
+	if (pemenang == 2){
 		skorplayer2 = skorplayer2 + 4;
 		skorplayer1 = skorplayer1 - 2;
 	}
-	if (*pemenang = 3){
+	if (pemenang == 3){
 		skorplayer1 = skorplayer1 - 1;
 		skorplayer2 = skorplayer2 - 1;
 	}
 	printf ("\nBOX POINTS\n");
+	printf ("PLAYER 1 (%d) VS (%d) PLAYER 2", &skorplayer1, &skorplayer2);
+}
+
+void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2){
+	*skorplayer1 = 0;
+	*skorplayer2 = 0;
+	
+	if (pemenang == 1){
+		skorplayer1 = skorplayer1 + 1;
+	}
+	if (pemenang == 2){
+		skorplayer2 = skorplayer2 + 1;
+	}
+	if (pemenang == 3){
+		skorplayer1 = skorplayer1 - 0;
+		skorplayer2 = skorplayer2 - 0;
+	}
+	printf ("\nBOX POINTS\n");
 	printf ("PLAYER 1 (%d) VS (%d) PLAYER 2", skorplayer1, skorplayer2);
 }
+
+void scorejudge (int* judgementcalls, int* skorplayer1, int* skorplayer2){
+	if (*skorplayer1 <= 0 && *skorplayer2 <= 0){
+		*judgementcalls = 3;	//jika skor keduanya 0, hasil seri
+	}
 	
+	if (*skorplayer1 <= 0){		//jika skorplayer1 0 atau kurang dari 0, player 2 menang
+		*judgementcalls = 2;
+	}
+	if (*skorplayer2 <= 0){		//jika skorplayer2 0 atau kurang dari 0, player 1 menang
+		*judgementcalls = 1;
+	}
+}
+
+int petunjukpermainan2 (){
+	system ("cls");
+	printf ("\n\n=====VS Computer===== \n Selamat datang di mode permainan VS Computer!");
+	printf ("Dalam mode permainan ini, kamu akan melawan computer, tingkat kesuliatn dapat kamu sesuaikan setelah halaman ini.");
+	printf ("\nEasy untuk computer tingkat mudah, Medium untuk computer tingkat menengah, dan Hard untuk computer tingkat tinggi.\n");
+	printf ("Peraturannya sederhana\n");
+	printf ("Kalian bermain tic tac toe, yang lebih dahulu mendapatkan tanda sebaris, pemenang.");
+	printf ("\nJika menang kalian dapat 1 poin, begitu juga computer. Poin dimulai dari 0 untuk pemain dan computer.\n");
+	printf ("jika kalah dan seri kalian dapat 0 poin dan giliran yang melangkah awal akan berganti \n(sebelumnya X, jika seri, di permainan selanjutnya O melangkah di awal)");
+	printf ("\n\nBermainlah sepuasnya di mode ini!\n");	
+	printf ("\nSelamat bermain, untuk melanjutkan ketik 1 dan enter");
+}
