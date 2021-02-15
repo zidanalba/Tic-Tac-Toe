@@ -206,8 +206,6 @@ int main (){
 				
 				checkwin (player,&pemenang);
 				
-				skormode2 (pemenang,&skorplayer1,&skorplayer2);
-				
 				if (pemenang ==1 || pemenang == 2){
 					goto udhmenangeasy;
 				}
@@ -250,8 +248,6 @@ int main (){
 				else if (choice == 9 && square[9] == '9')
 				square[9] = mark;
 				
-				player++;
-				
 				udhmenangeasy : checkwin (player,&pemenang);
 				skormode2 (pemenang,&skorplayer1,&skorplayer2);
 				
@@ -270,13 +266,11 @@ int main (){
 					printf ("1. Ya\n2. Keluar dari mode ini\n");
 					scanf ("%d",&exit );	
 				}
-				printf ("\nnilai skor1 %d dan skor 2 %d setelah lanjut", skorplayer1,skorplayer2);
-				getch ();
 				if (exit == 1){
-					skormode2 (pemenang, &skorplayer1, &skorplayer2);
 					resetpapan(&pemenang);
 					langkah = 1;
 				}
+				player++;
 				
 }while(exit != 2);
 }
@@ -401,8 +395,6 @@ int main (){
 					printf ("1. Ya\n2. Keluar dari mode ini\n");
 					scanf ("%d",&exit );	
 				}
-				printf ("\nnilai skor1 %d dan skor 2 %d setelah lanjut", skorplayer1,skorplayer2);
-				getch ();
 				if (exit == 1){
 					skormode2 (pemenang, &skorplayer1, &skorplayer2);
 					resetpapan(&pemenang);
@@ -532,8 +524,6 @@ int main (){
 					printf ("1. Ya\n2. Keluar dari mode ini\n");
 					scanf ("%d",&exit );	
 				}
-				printf ("\nnilai skor1 %d dan skor 2 %d setelah lanjut", skorplayer1,skorplayer2);
-				getch ();
 				if (exit == 1){
 					skormode2 (pemenang, &skorplayer1, &skorplayer2);
 					resetpapan(&pemenang);
@@ -792,11 +782,23 @@ void comeasy (int *choice, int langkah){
 		else if (pertama == 7 || square[3] != '3'){
 			*choice = 7;
 		}
-	else if (langkah ==3){
-		
 	}
+		else if (langkah ==3){
+		do {
+			*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+	
+	else if (langkah == 4){
+			do{
+				*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+		printf ("\nini langkah computer %d", *choice);
+		getch ();
 	}
-}
 
 void choices (int choice, char mark){
 	int a;
