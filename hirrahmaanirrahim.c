@@ -5,6 +5,7 @@
 void board ();
 int petunjukpermainan1 ();
 int petunjukpermainan2 ();
+int menanground (int pemenang);
 void mainmenu();
 //procedure mainmenu(output modepermainan : integer)
 char square[10] = {'o','1','2','3','4','5','6','7','8','9'};
@@ -26,26 +27,24 @@ int main (){
 
 	int modepermainan;
 	printf ("\n\nHallo, Selamat Datang!\nKetik apa saja dan tekan enter untuk melanjutkan ke Main Menu");
-
+	getch ();
 	
 	menu : mainmenu();
 	scanf ("%d", &modepermainan);
 	
 	if (modepermainan == 1){
-		//DEKLARASI
 		
-		mark=(player == 1) ? 'X' : 'O';
-		
+		mark=(player == 1) ? 'X' : 'O'; //Mark akan bernilai X jika Player bernilai 1, selain dari itu 
+										//mark bernilai O
 		petunjukpermainan1 ();
 		getch();
 		
 		
 		while (judgementcalls==0){
-		rematch : board ();
+		rematch : board ();		
 		skormode1 (pemenang,&skorplayer1,&skorplayer2);
         player=(player%2)?1:2;
         mark=(player == 1) ? 'X' : 'O';
-//        printf("\n\n%d %d\n", skorplayer1,skorplayer2);
 
         printf ("\n\nPlayer %d masukkan nomor : ", player);
 		scanf ("%d", &choice);
@@ -140,103 +139,428 @@ int main (){
 	}
 	else if (modepermainan == 2){
 		int level;
+		int exit=0;
 		
 		petunjukpermainan2 ();
 		getch ();
 		
-		system ("cls");
+		level : system ("cls");
 		printf ("\n\n1. Easy\n2. Medium\n3. Hard");
 		printf ("\nPilih Tingkat Kesulitan : ");
 		scanf ("%d", &level);
 		
 		if (level == 1){
-			void comeasy ();
 			int player = 1,choice;
+			void choices (int choice, char mark);
 			char mark;
 			int pemenang;
-			int skorplayer1;
-			int skorplayer2;
+			int skorplayer1=0;
+			int skorplayer2=0;
+			int langkah=1;
 			void checkwin (int player, int* pemenang);
 			void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2);
+			void comeasy (int *choice, int langkah);
 			
 			do{
+				exit = 0;
 				board ();
-				skormode2(pemenang,&skorplayer1,&skorplayer2);
-				pemenang = 0;
-				player=(player%2)?1:2;
-		        printf ("\n\nPlayer %d masukkan nomor : ", player);
-		        scanf ("%d", &choice);
-		        mark=(player == 1) ? 'X' : 'O';
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+        		player=(player%2)?1:2;
+        		mark=(player == 1) ? 'X' : 'O';
+
+        		printf ("\n\nPlayer %d masukkan nomor : ", player);
+				scanf ("%d", &choice);
 		        
-		        if (choice == 1 && square[1] == '1')
-		        
-	            square[1] = mark;
-	    	    else if (choice == 2 && square[2] == '2')
-	
-	            square[2] = mark;
-	       		else if (choice == 3 && square[3] == '3')
-	
-	            square[3] = mark;
-	        	else if (choice == 4 && square[4] == '4')
-	
-	            square[4] = mark;
-	        	else if (choice == 5 && square[5] == '5')
-	
-	            square[5] = mark;
-	        	else if (choice == 6 && square[6] == '6')
-	
-	            square[6] = mark;
-	        	else if (choice == 7 && square[7] == '7')
-	
-	            square[7] = mark;
-	        	else if (choice == 8 && square[8] == '8')
-	
-	            square[8] = mark;
-	        	else if (choice == 9 && square[9] == '9')
-			    square[9] = mark;
-				else {
+				if (choice == 1 && square[1] == '1')
+				square[1] = mark;	
+					        
+				else if (choice == 2 && square[2] == '2')
+				square[2] = mark;
+					    	
+				else if (choice == 3 && square[3] == '3')
+				square[3] = mark;
+					        
+				else if (choice == 4 && square[4] == '4')
+				square[4] = mark;
+					        
+				else if (choice == 5 && square[5] == '5')
+				square[5] = mark;
+					        
+				else if (choice == 6 && square[6] == '6')
+				square[6] = mark;
+					        
+				else if (choice == 7 && square[7] == '7')
+				square[7] = mark;
+					        
+				else if (choice == 8 && square[8] == '8')
+				square[8] = mark;
+					        
+				else if (choice == 9 && square[9] == '9')
+				square[9] = mark;
+							
+				else{
 				printf("Langkah tidak tepat ");
-				getch ();
-	
-	            player--;
+				getch();
+				player--;
 				}
 				
-				checkwin (player, &pemenang);
-				skormode2(pemenang,&skorplayer1,&skorplayer2);
-				if (pemenang == 1){
-				printf ("Selamat! Player %d menang!", pemenang);
-//				pemenang = 0;
+				checkwin (player,&pemenang);
+				
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+				
+				if (pemenang ==1 || pemenang == 2){
+					goto udhmenangeasy;
 				}
-				else if (pemenang == 2){
-				printf ("Selamat! Player %d menang!", pemenang);
-//				pemenang = 0;
-				}
-				else if (pemenang == 3){
-				printf ("Kalian sama kuat, hasilnya seri!");
-//				pemenang = 0;
-				}
+				
 				
 				player++;
-			}while(pemenang == 0);
+		
 				
+				if (player == 2){
+					mark= 'O';
+					comeasy (&choice, langkah);
+					langkah++;
+				}
+				
+				if (choice == 1 && square[1] == '1'){
+				square[1] = mark;	
+				}
+					        
+				else if (choice == 2 && square[2] == '2')
+				square[2] = mark;
+					    	
+				else if (choice == 3 && square[3] == '3')
+				square[3] = mark;
+					        
+				else if (choice == 4 && square[4] == '4')
+				square[4] = mark;
+					        
+				else if (choice == 5 && square[5] == '5')
+				square[5] = mark;
+					        
+				else if (choice == 6 && square[6] == '6')
+				square[6] = mark;
+					        
+				else if (choice == 7 && square[7] == '7')
+				square[7] = mark;
+					        
+				else if (choice == 8 && square[8] == '8')
+				square[8] = mark;
+					        
+				else if (choice == 9 && square[9] == '9')
+				square[9] = mark;
+				
+				player++;
+				
+				udhmenangeasy : checkwin (player,&pemenang);
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+				
+				if (pemenang == 1 || pemenang == 2){
+					printf ("\nSELAMAT PLAYER %d MENANG!\n", player);
+					getch ();
+					system ("cls");
+					printf ("\nLanjut?\n");
+					printf ("1. Ya\n2. Keluar dari mode ini\n");
+					scanf ("%d",&exit );
+					}
+				else if (pemenang == 3){
+					printf ("\nKALIAN SERI!\n");
+					system ("cls");
+					printf ("\nLanjut?\n");
+					printf ("1. Ya\n2. Keluar dari mode ini\n");
+					scanf ("%d",&exit );	
+				}
+				printf ("\nnilai skor1 %d dan skor 2 %d setelah lanjut", skorplayer1,skorplayer2);
+				getch ();
+				if (exit == 1){
+					skormode2 (pemenang, &skorplayer1, &skorplayer2);
+					resetpapan(&pemenang);
+					langkah = 1;
+				}
+				
+}while(exit != 2);
+}
+		else if (level == 2){
+			int player = 1,choice;
+			void choices (int choice, char mark);
+			char mark;
+			int pemenang;
+			int skorplayer1=0;
+			int skorplayer2=0;
+			int langkah=1;
+			void checkwin (int player, int* pemenang);
+			void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2);
+			void comeasy (int *choice, int langkah);
 			
+			do{
+				exit = 0;
+				board ();
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+        		player=(player%2)?1:2;
+        		mark=(player == 1) ? 'X' : 'O';
+
+        		printf ("\n\nPlayer %d masukkan nomor : ", player);
+				scanf ("%d", &choice);
+		        
+				if (choice == 1 && square[1] == '1')
+				square[1] = mark;	
+					        
+				else if (choice == 2 && square[2] == '2')
+				square[2] = mark;
+					    	
+				else if (choice == 3 && square[3] == '3')
+				square[3] = mark;
+					        
+				else if (choice == 4 && square[4] == '4')
+				square[4] = mark;
+					        
+				else if (choice == 5 && square[5] == '5')
+				square[5] = mark;
+					        
+				else if (choice == 6 && square[6] == '6')
+				square[6] = mark;
+					        
+				else if (choice == 7 && square[7] == '7')
+				square[7] = mark;
+					        
+				else if (choice == 8 && square[8] == '8')
+				square[8] = mark;
+					        
+				else if (choice == 9 && square[9] == '9')
+				square[9] = mark;
+							
+				else{
+				printf("Langkah tidak tepat ");
+				getch();
+				player--;
+				}
+				
+				checkwin (player,&pemenang);
+				
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+				
+				if (pemenang ==1 || pemenang == 2){
+					goto udhmenangmed;
+				}
+				
+				
+				player++;
+		
+				
+				if (player == 2){
+					mark= 'O';
+					comeasy (&choice, langkah);
+					langkah++;
+				}
+				
+				if (choice == 1 && square[1] == '1'){
+				square[1] = mark;	
+				}
+					        
+				else if (choice == 2 && square[2] == '2')
+				square[2] = mark;
+					    	
+				else if (choice == 3 && square[3] == '3')
+				square[3] = mark;
+					        
+				else if (choice == 4 && square[4] == '4')
+				square[4] = mark;
+					        
+				else if (choice == 5 && square[5] == '5')
+				square[5] = mark;
+					        
+				else if (choice == 6 && square[6] == '6')
+				square[6] = mark;
+					        
+				else if (choice == 7 && square[7] == '7')
+				square[7] = mark;
+					        
+				else if (choice == 8 && square[8] == '8')
+				square[8] = mark;
+					        
+				else if (choice == 9 && square[9] == '9')
+				square[9] = mark;
+				
+				player++;
+				
+				udhmenangmed : checkwin (player,&pemenang);
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+				
+				if (pemenang == 1 || pemenang == 2){
+					printf ("\nSELAMAT PLAYER %d MENANG!\n", player);
+					getch ();
+					system ("cls");
+					printf ("\nLanjut?\n");
+					printf ("1. Ya\n2. Keluar dari mode ini\n");
+					scanf ("%d",&exit );
+					}
+				else if (pemenang == 3){
+					printf ("\nKALIAN SERI!\n");
+					system ("cls");
+					printf ("\nLanjut?\n");
+					printf ("1. Ya\n2. Keluar dari mode ini\n");
+					scanf ("%d",&exit );	
+				}
+				printf ("\nnilai skor1 %d dan skor 2 %d setelah lanjut", skorplayer1,skorplayer2);
+				getch ();
+				if (exit == 1){
+					skormode2 (pemenang, &skorplayer1, &skorplayer2);
+					resetpapan(&pemenang);
+					langkah = 1;
+				}
+				
+}while(exit != 2);
 		}
-		if (level == 2){
+		else if (level == 3){
+			int player = 1,choice;
+			void choices (int choice, char mark);
+			char mark;
+			int pemenang;
+			int skorplayer1=0;
+			int skorplayer2=0;
+			int langkah=1;
+			void checkwin (int player, int* pemenang);
+			void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2);
+			void comeasy (int *choice, int langkah);
 			
+			do{
+				exit = 0;
+				board ();
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+        		player=(player%2)?1:2;
+        		mark=(player == 1) ? 'X' : 'O';
+
+        		printf ("\n\nPlayer %d masukkan nomor : ", player);
+				scanf ("%d", &choice);
+		        
+				if (choice == 1 && square[1] == '1')
+				square[1] = mark;	
+					        
+				else if (choice == 2 && square[2] == '2')
+				square[2] = mark;
+					    	
+				else if (choice == 3 && square[3] == '3')
+				square[3] = mark;
+					        
+				else if (choice == 4 && square[4] == '4')
+				square[4] = mark;
+					        
+				else if (choice == 5 && square[5] == '5')
+				square[5] = mark;
+					        
+				else if (choice == 6 && square[6] == '6')
+				square[6] = mark;
+					        
+				else if (choice == 7 && square[7] == '7')
+				square[7] = mark;
+					        
+				else if (choice == 8 && square[8] == '8')
+				square[8] = mark;
+					        
+				else if (choice == 9 && square[9] == '9')
+				square[9] = mark;
+							
+				else{
+				printf("Langkah tidak tepat ");
+				getch();
+				player--;
+				}
+				
+				checkwin (player,&pemenang);
+				
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+				
+				if (pemenang ==1 || pemenang == 2){
+					goto udhmenanghard;
+				}
+				
+				
+				player++;
+		
+				
+				if (player == 2){
+					mark= 'O';
+					comeasy (&choice, langkah);
+					langkah++;
+				}
+				
+				if (choice == 1 && square[1] == '1'){
+				square[1] = mark;	
+				}
+					        
+				else if (choice == 2 && square[2] == '2')
+				square[2] = mark;
+					    	
+				else if (choice == 3 && square[3] == '3')
+				square[3] = mark;
+					        
+				else if (choice == 4 && square[4] == '4')
+				square[4] = mark;
+					        
+				else if (choice == 5 && square[5] == '5')
+				square[5] = mark;
+					        
+				else if (choice == 6 && square[6] == '6')
+				square[6] = mark;
+					        
+				else if (choice == 7 && square[7] == '7')
+				square[7] = mark;
+					        
+				else if (choice == 8 && square[8] == '8')
+				square[8] = mark;
+					        
+				else if (choice == 9 && square[9] == '9')
+				square[9] = mark;
+				
+				player++;
+				
+				udhmenanghard : checkwin (player,&pemenang);
+				skormode2 (pemenang,&skorplayer1,&skorplayer2);
+				
+				if (pemenang == 1 || pemenang == 2){
+					printf ("\nSELAMAT PLAYER %d MENANG!\n", player);
+					getch ();
+					system ("cls");
+					printf ("\nLanjut?\n");
+					printf ("1. Ya\n2. Keluar dari mode ini\n");
+					scanf ("%d",&exit );
+					}
+				else if (pemenang == 3){
+					printf ("\nKALIAN SERI!\n");
+					system ("cls");
+					printf ("\nLanjut?\n");
+					printf ("1. Ya\n2. Keluar dari mode ini\n");
+					scanf ("%d",&exit );	
+				}
+				printf ("\nnilai skor1 %d dan skor 2 %d setelah lanjut", skorplayer1,skorplayer2);
+				getch ();
+				if (exit == 1){
+					skormode2 (pemenang, &skorplayer1, &skorplayer2);
+					resetpapan(&pemenang);
+					langkah = 1;
+				}
+				
+}while(exit != 2);
 		}
-		if (level == 3){
-			
+		else {
+			printf ("\n\nNomor Level tidak valid");
+			getch ();
+			goto level;
 		}
-//		else {
-//			printf ("\n\nNomor Level tidak valid");
-//		}
+}
+
 		
 		
-	}
-	else if (modepermainan == 3){
+		else if (modepermainan == 3){
 		return 0;
 	}
-}
+	else {
+		printf ("\n\nModepermainan tidak valid");
+		getch ();
+		goto menu;
+	}	
+	}
+
 
 void mainmenu () {
 	system ("cls");
@@ -327,10 +651,7 @@ void skormode1 (int pemenang, int *skorplayer1, int* skorplayer2){
 	int skor1;
 	int skor2;
 	skor1 = *skorplayer1;
-	skor2 = *skorplayer2;
-	printf ("\nPOINTS\n");
-	printf ("PLAYER 1 : %d vs %d : ini PLAYER 2\n", skor1, skor2);
-	getch();	
+	skor2 = *skorplayer2;	
 	if (pemenang == 1){
 		*skorplayer1 = *skorplayer1 + 3;
 		*skorplayer2 = *skorplayer2 - 2;
@@ -343,22 +664,29 @@ void skormode1 (int pemenang, int *skorplayer1, int* skorplayer2){
 		*skorplayer1 = *skorplayer1 - 1;
 		*skorplayer2 = *skorplayer2 - 1;
 	}
+		printf ("\nPOINTS\n");
+	printf ("PLAYER 1 : %d vs %d : PLAYER 2\n", skor1, skor2);
+	getch();
 }
 
 void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2){
-	skorplayer1 = 0;
-	skorplayer2 = 0;
+//	*skorplayer1 = 0;
+//	*skorplayer2 = 0;
+	int skor1=*skorplayer1;
+	int skor2=*skorplayer2;
 	
 	if (pemenang == 1){
-		skorplayer1 = skorplayer1 + 1;
+		*skorplayer1 = *skorplayer1 + 1;
 	}
 	if (pemenang == 2){
-		skorplayer2 = skorplayer2 + 1;
+		*skorplayer2 = *skorplayer2 + 1;
 	}
 	if (pemenang == 3){
-		skorplayer1 = skorplayer1 - 0;
-		skorplayer2 = skorplayer2 - 0;
+		*skorplayer1 = *skorplayer1 - 0;
+		*skorplayer2 = *skorplayer2 - 0;
 	}
+	printf ("\nPOINTS\n");
+	printf ("PLAYER 1 : %d vs %d : PLAYER 2\n", skor1, skor2);
 }
 
 void scorejudge (int* judgementcalls, int skorplayer1, int skorplayer2){
@@ -403,12 +731,109 @@ void resetpapan(int *pemenang){
 
 void resetskormode1 (int *skorplayer1, int *skorplayer2){
 	int a=4;
-	*skorplayer1=4;
-	*skorplayer2=4;
+	*skorplayer1=a;
+	*skorplayer2=a;
 }
 
 void resetjudgementcalls (int *judgementcalls){
 	int a=0;
 	*judgementcalls = a;
 	*judgementcalls = a;
+}
+
+int menanground (int pemenang){
+	if (pemenang == 1){
+	printf ("Selamat! Player %d menang!", pemenang);
+	getch ();
+	}
+	else if (pemenang == 2){
+	printf ("Selamat! Player %d menang!", pemenang);
+	getch();;
+	}
+	else if (pemenang == 3){
+	printf ("Kalian sama kuat, hasilnya seri!");
+	getch();
+}
+}
+
+void comeasy (int *choice, int langkah){
+	int pertama;
+	int kedua;
+	if (langkah == 1){
+		if (*choice == 1 || *choice == 7 || *choice == 4){
+			*choice = 6;
+			pertama = 6;
+		}
+		else if (*choice == 2 || *choice == 3 || *choice == 9){
+			*choice = 4;
+			pertama = 4;
+		}
+		else if (*choice == 5 || *choice == 6 || *choice == 8){
+			*choice = 7;
+			pertama = 7;
+		}
+	}
+	else if (langkah == 2){
+		if (pertama == 6 || square[2] == '2' ){
+			*choice = 2;
+		}
+		else if (pertama == 6 || square[2] != '2'){
+				*choice = 9;
+			}
+		else if (pertama == 4 || square[6] == '6'){
+			*choice = 6;
+		}
+		else if (pertama == 4 || square[6] != '6') {
+				*choice = 6;
+			}
+		else if (pertama == 7 || square[3] == '3'){
+			*choice = 3;
+		}
+		else if (pertama == 7 || square[3] != '3'){
+			*choice = 7;
+		}
+	else if (langkah ==3){
+		
+	}
+	}
+}
+
+void choices (int choice, char mark){
+	int a;
+	choice = a;
+
+	if (choice == 1 && square[1] == '1'){
+	square[1] = mark;
+	printf ("\nini choices\n");
+	getch ();	
+	}
+		        
+	else if (a == 2 && square[2] == '2')
+	square[2] = mark;
+		    	
+	else if (a == 3 && square[3] == '3')
+	square[3] = mark;
+		        
+	else if (a == 4 && square[4] == '4')
+	square[4] = mark;
+		        
+	else if (a == 5 && square[5] == '5')
+	square[5] = mark;
+		        
+	else if (a == 6 && square[6] == '6')
+	square[6] = mark;
+		        
+	else if (a == 7 && square[7] == '7')
+	square[7] = mark;
+		        
+	else if (a == 8 && square[8] == '8')
+	square[8] = mark;
+		        
+	else if (a == 9 && square[9] == '9')
+	square[9] = mark;
+				
+	else{
+	printf("Langkah tidak tepat ");
+	getch();
+				}
 }
