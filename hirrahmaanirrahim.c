@@ -16,6 +16,7 @@ void resetpapan (int *pemenang);
 void resetskormode1 (int *skorplayer1, int *skorplayer2);
 void resetjudgementcalls (int *judgementcalls);
 
+
 int main (){
 	int player = 1,choice;
 		char mark;
@@ -97,6 +98,7 @@ int main (){
 			resetpapan(&pemenang);
 		}
 		else if (pemenang == 3){
+			printf ("\nKalian sama kuat!\n");
 			getch ();
 			resetpapan(&pemenang);
 		}
@@ -168,7 +170,7 @@ int main (){
         		player=(player%2)?1:2;
         		mark=(player == 1) ? 'X' : 'O';
 
-        		printf ("\n\nPlayer %d masukkan nomor : ", player);
+        		langkaheasy : printf ("\n\nPlayer %d masukkan nomor : ", player);
 				scanf ("%d", &choice);
 		        
 				if (choice == 1 && square[1] == '1')
@@ -201,7 +203,7 @@ int main (){
 				else{
 				printf("Langkah tidak tepat ");
 				getch();
-				player--;
+				goto langkaheasy;
 				}
 				
 				checkwin (player,&pemenang);
@@ -211,7 +213,7 @@ int main (){
 				}
 				
 				
-				player++;
+				player=2;
 		
 				
 				if (player == 2){
@@ -266,11 +268,16 @@ int main (){
 					printf ("1. Ya\n2. Keluar dari mode ini\n");
 					scanf ("%d",&exit );	
 				}
+				
+				
+								player++;
+				
 				if (exit == 1){
 					resetpapan(&pemenang);
+					player =1;
 					langkah = 1;
 				}
-				player++;
+				player=1;
 				
 }while(exit != 2);
 }
@@ -284,7 +291,7 @@ int main (){
 			int langkah=1;
 			void checkwin (int player, int* pemenang);
 			void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2);
-			void comeasy (int *choice, int langkah);
+			void commedium (int *choice, int langkah);
 			
 			do{
 				exit = 0;
@@ -293,7 +300,7 @@ int main (){
         		player=(player%2)?1:2;
         		mark=(player == 1) ? 'X' : 'O';
 
-        		printf ("\n\nPlayer %d masukkan nomor : ", player);
+        		langkahmedium : printf ("\n\nPlayer %d masukkan nomor : ", player);
 				scanf ("%d", &choice);
 		        
 				if (choice == 1 && square[1] == '1')
@@ -326,24 +333,22 @@ int main (){
 				else{
 				printf("Langkah tidak tepat ");
 				getch();
-				player--;
+				goto langkahmedium;
 				}
 				
 				checkwin (player,&pemenang);
 				
-				skormode2 (pemenang,&skorplayer1,&skorplayer2);
-				
 				if (pemenang ==1 || pemenang == 2){
-					goto udhmenangmed;
+					goto udhmenangmedium;
 				}
 				
 				
-				player++;
+				player=2;
 		
 				
 				if (player == 2){
 					mark= 'O';
-					comeasy (&choice, langkah);
+					commedium (&choice, langkah);
 					langkah++;
 				}
 				
@@ -375,9 +380,7 @@ int main (){
 				else if (choice == 9 && square[9] == '9')
 				square[9] = mark;
 				
-				player++;
-				
-				udhmenangmed : checkwin (player,&pemenang);
+				udhmenangmedium : checkwin (player,&pemenang);
 				skormode2 (pemenang,&skorplayer1,&skorplayer2);
 				
 				if (pemenang == 1 || pemenang == 2){
@@ -395,11 +398,16 @@ int main (){
 					printf ("1. Ya\n2. Keluar dari mode ini\n");
 					scanf ("%d",&exit );	
 				}
+				
+				
+								player++;
+				
 				if (exit == 1){
-					skormode2 (pemenang, &skorplayer1, &skorplayer2);
 					resetpapan(&pemenang);
+					player =1;
 					langkah = 1;
 				}
+				player=1;
 				
 }while(exit != 2);
 		}
@@ -413,7 +421,7 @@ int main (){
 			int langkah=1;
 			void checkwin (int player, int* pemenang);
 			void skormode2 (int pemenang, int* skorplayer1, int* skorplayer2);
-			void comeasy (int *choice, int langkah);
+			void comhard (int *choice, int langkah);
 			
 			do{
 				exit = 0;
@@ -422,7 +430,7 @@ int main (){
         		player=(player%2)?1:2;
         		mark=(player == 1) ? 'X' : 'O';
 
-        		printf ("\n\nPlayer %d masukkan nomor : ", player);
+        		langkahhard : printf ("\n\nPlayer %d masukkan nomor : ", player);
 				scanf ("%d", &choice);
 		        
 				if (choice == 1 && square[1] == '1')
@@ -455,24 +463,22 @@ int main (){
 				else{
 				printf("Langkah tidak tepat ");
 				getch();
-				player--;
+				goto langkahhard;
 				}
 				
 				checkwin (player,&pemenang);
-				
-				skormode2 (pemenang,&skorplayer1,&skorplayer2);
 				
 				if (pemenang ==1 || pemenang == 2){
 					goto udhmenanghard;
 				}
 				
 				
-				player++;
+				player=2;
 		
 				
 				if (player == 2){
 					mark= 'O';
-					comeasy (&choice, langkah);
+					comhard (&choice, langkah);
 					langkah++;
 				}
 				
@@ -503,8 +509,6 @@ int main (){
 					        
 				else if (choice == 9 && square[9] == '9')
 				square[9] = mark;
-				
-				player++;
 				
 				udhmenanghard : checkwin (player,&pemenang);
 				skormode2 (pemenang,&skorplayer1,&skorplayer2);
@@ -524,11 +528,16 @@ int main (){
 					printf ("1. Ya\n2. Keluar dari mode ini\n");
 					scanf ("%d",&exit );	
 				}
+				
+				
+								player++;
+				
 				if (exit == 1){
-					skormode2 (pemenang, &skorplayer1, &skorplayer2);
 					resetpapan(&pemenang);
+					player =1;
 					langkah = 1;
 				}
+				player=1;
 				
 }while(exit != 2);
 		}
@@ -536,6 +545,10 @@ int main (){
 			printf ("\n\nNomor Level tidak valid");
 			getch ();
 			goto level;
+		}
+		if (exit == 2){
+			resetpapan(&pemenang);
+			goto menu;
 		}
 }
 
@@ -706,7 +719,7 @@ int petunjukpermainan2 (){
 	printf ("\nJika menang kalian dapat 1 poin, begitu juga computer. Poin dimulai dari 0 untuk pemain dan computer.\n");
 	printf ("jika kalah dan seri kalian dapat 0 poin dan giliran yang melangkah awal akan berganti \n(sebelumnya X, jika seri, di permainan selanjutnya O melangkah di awal)");
 	printf ("\n\nBermainlah sepuasnya di mode ini!\n");	
-	printf ("\nSelamat bermain, untuk melanjutkan ketik 1 dan enter");	
+	printf ("\nSelamat bermain, ketik apa saja untuk melanjutkan");	
 }
 
 void resetpapan(int *pemenang){
@@ -797,6 +810,574 @@ void comeasy (int *choice, int langkah){
 		*choice = *choice;
 		}
 		printf ("\nini langkah computer %d", *choice);
+		getch ();
+	}
+	
+void commedium (int *choice, int langkah){
+	int i;
+	int a;
+	int pertama;
+	int kedua;
+	if (langkah == 1){
+		if (*choice == 1 || *choice == 3 || *choice == 7 || *choice == 9){
+			*choice = 5;
+			pertama = 5;
+		}
+		else if (*choice == 2 || *choice == 6){
+			*choice = 7;
+			pertama = 7;
+		}
+		else if (*choice == 4 || *choice == 8){
+			*choice = 3;
+			pertama = 3;
+		}
+		else if (*choice == 5){
+			do {
+			a=a+2;
+			*choice = a;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+	}
+	else if (langkah == 2){
+		if ((square[1] == 'X' && square[2] == 'X') || (square[1] == 'X' && square[3] == 'X') || (square[2] == 'X' && square[3] == 'X')){
+			if ((square[1] == 'X' && square[2] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			else if ((square[1] == 'X' && square[3] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+			if ((square[2] == 'X' && square[3] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[4] == 'X' && square[5] == 'X') || (square[4] == 'X' && square[6] == 'X') || (square[5] == 'X' && square[6] == 'X')){
+			
+			if ((square[4] == 'X' && square[5] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			else if ((square[4] == 'X' && square[6] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[6] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+		}
+		else if ((square[7] == 'X' && square[8] == 'X') || (square[7] == 'X' && square[9] == 'X') || (square[8] == 'X' && square[9] == 'X')){
+			if ((square[7] == 'X' && square[8] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[7] == 'X' && square[9] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			if ((square[8] == 'X' && square[9] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+		}
+		else if ((square[1] == 'X' && square[4] == 'X') || (square[1] == 'X' && square[7] == 'X') || (square[4] == 'X' && square[7] == 'X')){
+			if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[1] == 'X' && square[7] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			if ((square[4] == 'X' && square[7] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[2] == 'X' && square[5] == 'X') || (square[2] == 'X' && square[8] == 'X') || (square[5] == 'X' && square[8] == 'X')){
+			if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			else if ((square[2] == 'X' && square[8] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[8] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+		}
+		else if ((square[3] == 'X' && square[6] == 'X') || (square[3] == 'X' && square[9] == 'X') || (square[6] == 'X' && square[9] == 'X')){
+			if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[3] == 'X' && square[9] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			if ((square[6] == 'X' && square[9] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else if ((square[1] == 'X' && square[5] == 'X') || (square[1] == 'X' && square[9] == 'X') || (square[5] == 'X' && square[9] == 'X')){
+			if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[1] == 'X' && square[9] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[9] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[3] == 'X' && square[5] == 'X') || (square[3] == 'X' && square[7] == 'X') || (square[5] == 'X' && square[7] == 'X')){
+			if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[3] == 'X' && square[7] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[7] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else {
+			do {
+			*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+	}
+		else if (langkah ==3){
+		if ((square[1] == 'X' && square[2] == 'X') || (square[1] == 'X' && square[3] == 'X') || (square[2] == 'X' && square[3] == 'X')){
+		}
+			if ((square[1] == 'X' && square[2] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			else if ((square[1] == 'X' && square[3] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+			if ((square[2] == 'X' && square[3] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		else if ((square[4] == 'X' && square[5] == 'X') || (square[4] == 'X' && square[6] == 'X') || (square[5] == 'X' && square[6] == 'X')){			
+			if ((square[4] == 'X' && square[5] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			else if ((square[4] == 'X' && square[6] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[6] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+		}
+		else if ((square[7] == 'X' && square[8] == 'X') || (square[7] == 'X' && square[9] == 'X') || (square[8] == 'X' && square[9] == 'X')){
+			if ((square[7] == 'X' && square[8] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[7] == 'X' && square[9] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			if ((square[8] == 'X' && square[9] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+		}
+		else if ((square[1] == 'X' && square[4] == 'X') || (square[1] == 'X' && square[7] == 'X') || (square[4] == 'X' && square[7] == 'X')){
+			if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[1] == 'X' && square[7] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			if ((square[4] == 'X' && square[7] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[2] == 'X' && square[5] == 'X') || (square[2] == 'X' && square[8] == 'X') || (square[5] == 'X' && square[8] == 'X')){
+			if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			else if ((square[2] == 'X' && square[8] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[8] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+		}
+		else if ((square[3] == 'X' && square[6] == 'X') || (square[3] == 'X' && square[9] == 'X') || (square[6] == 'X' && square[9] == 'X')){
+			if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[3] == 'X' && square[9] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			if ((square[6] == 'X' && square[9] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else if ((square[1] == 'X' && square[5] == 'X') || (square[1] == 'X' && square[9] == 'X') || (square[5] == 'X' && square[9] == 'X')){
+			if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[1] == 'X' && square[9] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[9] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[3] == 'X' && square[5] == 'X') || (square[3] == 'X' && square[7] == 'X') || (square[5] == 'X' && square[7] == 'X')){
+			if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[3] == 'X' && square[7] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[7] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			
+		}
+
+		else {
+			do{
+				*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+		}
+		
+	
+	else if (langkah == 4){
+			do{
+				*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+
+		}
+	}
+	
+void comhard (int *choice, int langkah){
+	int i;
+	int a;
+	int pertama;
+	int kedua;
+	if (langkah == 1){
+		a=1;
+		if (*choice == 1 || *choice == 3 || *choice == 7 || *choice == 9){
+			*choice = 5;
+			pertama = 5;
+		}
+		else if (*choice == 2 || *choice == 6){
+			*choice = 7;
+			pertama = 7;
+		}
+		else if (*choice == 4 || *choice == 8){
+			*choice = 3;
+			pertama = 3;
+		}
+		else if (*choice == 5){
+			do {
+			a=a+2;
+			*choice = a;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+	}
+	else if (langkah == 2){
+		if ((square[1] == 'X' && square[2] == 'X') || (square[1] == 'X' && square[3] == 'X') || (square[2] == 'X' && square[3] == 'X')){
+			if ((square[1] == 'X' && square[2] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			else if ((square[1] == 'X' && square[3] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+			if ((square[2] == 'X' && square[3] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[4] == 'X' && square[5] == 'X') || (square[4] == 'X' && square[6] == 'X') || (square[5] == 'X' && square[6] == 'X')){
+			
+			if ((square[4] == 'X' && square[5] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			else if ((square[4] == 'X' && square[6] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[6] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			
+		}
+		else if ((square[7] == 'X' && square[8] == 'X') || (square[7] == 'X' && square[9] == 'X') || (square[8] == 'X' && square[9] == 'X')){
+			if ((square[7] == 'X' && square[8] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[7] == 'X' && square[9] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			if ((square[8] == 'X' && square[9] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+		}
+		else if ((square[1] == 'X' && square[4] == 'X') || (square[1] == 'X' && square[7] == 'X') || (square[4] == 'X' && square[7] == 'X')){
+			if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[1] == 'X' && square[7] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			if ((square[4] == 'X' && square[7] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[2] == 'X' && square[5] == 'X') || (square[2] == 'X' && square[8] == 'X') || (square[5] == 'X' && square[8] == 'X')){
+			if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			else if ((square[2] == 'X' && square[8] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[8] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+		}
+		else if ((square[3] == 'X' && square[6] == 'X') || (square[3] == 'X' && square[9] == 'X') || (square[6] == 'X' && square[9] == 'X')){
+			if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[3] == 'X' && square[9] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			if ((square[6] == 'X' && square[9] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else if ((square[1] == 'X' && square[5] == 'X') || (square[1] == 'X' && square[9] == 'X') || (square[5] == 'X' && square[9] == 'X')){
+			if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[1] == 'X' && square[9] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[9] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[3] == 'X' && square[5] == 'X') || (square[3] == 'X' && square[7] == 'X') || (square[5] == 'X' && square[7] == 'X')){
+			if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[3] == 'X' && square[7] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[7] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else {
+			do {
+			*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+	}
+		else if (langkah ==3){
+		if ((square[1] == 'X' && square[2] == 'X') || (square[1] == 'X' && square[3] == 'X') || (square[2] == 'X' && square[3] == 'X')){
+		}
+			if ((square[1] == 'X' && square[2] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			else if ((square[1] == 'X' && square[3] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+			if ((square[2] == 'X' && square[3] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		else if ((square[4] == 'X' && square[5] == 'X') || (square[4] == 'X' && square[6] == 'X') || (square[5] == 'X' && square[6] == 'X')){			
+			if ((square[4] == 'X' && square[5] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			else if ((square[4] == 'X' && square[6] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[6] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+		}
+		else if ((square[7] == 'X' && square[8] == 'X') || (square[7] == 'X' && square[9] == 'X') || (square[8] == 'X' && square[9] == 'X')){
+			if ((square[7] == 'X' && square[8] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[7] == 'X' && square[9] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			if ((square[8] == 'X' && square[9] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+		}
+		else if ((square[1] == 'X' && square[4] == 'X') || (square[1] == 'X' && square[7] == 'X') || (square[4] == 'X' && square[7] == 'X')){
+			if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[1] == 'X' && square[7] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			if ((square[4] == 'X' && square[7] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[2] == 'X' && square[5] == 'X') || (square[2] == 'X' && square[8] == 'X') || (square[5] == 'X' && square[8] == 'X')){
+			if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			else if ((square[2] == 'X' && square[8] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[8] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+		}
+		else if ((square[3] == 'X' && square[6] == 'X') || (square[3] == 'X' && square[9] == 'X') || (square[6] == 'X' && square[9] == 'X')){
+			if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[3] == 'X' && square[9] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			if ((square[6] == 'X' && square[9] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else if ((square[1] == 'X' && square[5] == 'X') || (square[1] == 'X' && square[9] == 'X') || (square[5] == 'X' && square[9] == 'X')){
+			if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[1] == 'X' && square[9] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[9] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[3] == 'X' && square[5] == 'X') || (square[3] == 'X' && square[7] == 'X') || (square[5] == 'X' && square[7] == 'X')){
+			if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[3] == 'X' && square[7] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[7] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			
+		}
+
+		else {
+			do{
+				*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+		}
+		
+	
+	else if (langkah == 4){
+		if ((square[1] == 'X' && square[2] == 'X') || (square[1] == 'X' && square[3] == 'X') || (square[2] == 'X' && square[3] == 'X')){
+			printf ("\nmasuk 123\n");
+			getch ();
+		}
+			if ((square[1] == 'X' && square[2] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			else if ((square[1] == 'X' && square[3] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+			if ((square[2] == 'X' && square[3] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		else if ((square[4] == 'X' && square[5] == 'X') || (square[4] == 'X' && square[6] == 'X') || (square[5] == 'X' && square[6] == 'X')){
+		printf ("\nmasuk 456\n");
+			getch ();			
+			if ((square[4] == 'X' && square[5] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			else if ((square[4] == 'X' && square[6] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[6] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			goto jupanlan;
+		}
+		 else if ((square[7] == 'X' && square[8] == 'X') || (square[7] == 'X' && square[9] == 'X') || (square[8] == 'X' && square[9] == 'X')){
+			jupanlan : printf ("\nmasuk 789\n");
+			getch ();
+			if ((square[7] == 'X' && square[8] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[7] == 'X' && square[9] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			if ((square[8] == 'X' && square[9] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			printf ("kesini kok\n");
+			getch ();
+		}
+		else if ((square[1] == 'X' && square[4] == 'X') || (square[1] == 'X' && square[7] == 'X') || (square[4] == 'X' && square[7] == 'X')){
+			if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[1] == 'X' && square[7] == 'X') && square [4] == '4'){
+				*choice = 4;
+			}
+			if ((square[4] == 'X' && square[7] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[2] == 'X' && square[5] == 'X') || (square[2] == 'X' && square[8] == 'X') || (square[5] == 'X' && square[8] == 'X')){
+			if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
+				*choice = 8;
+			}
+			else if ((square[2] == 'X' && square[8] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[8] == 'X') && square [2] == '2'){
+				*choice = 2;
+			}
+		}
+		else if ((square[3] == 'X' && square[6] == 'X') || (square[3] == 'X' && square[9] == 'X') || (square[6] == 'X' && square[9] == 'X')){
+			if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[3] == 'X' && square[9] == 'X') && square [6] == '6'){
+				*choice = 6;
+			}
+			if ((square[6] == 'X' && square[9] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+		}
+		else if ((square[1] == 'X' && square[5] == 'X') || (square[1] == 'X' && square[9] == 'X') || (square[5] == 'X' && square[9] == 'X')){
+			if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
+				*choice = 9;
+			}
+			else if ((square[1] == 'X' && square[9] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[9] == 'X') && square [1] == '1'){
+				*choice = 1;
+			}
+		}
+		else if ((square[3] == 'X' && square[5] == 'X') || (square[3] == 'X' && square[7] == 'X') || (square[5] == 'X' && square[7] == 'X')){
+			if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
+				*choice = 7;
+			}
+			else if ((square[3] == 'X' && square[7] == 'X') && square [5] == '5'){
+				*choice = 5;
+			}
+			if ((square[5] == 'X' && square[7] == 'X') && square [3] == '3'){
+				*choice = 3;
+			}
+			
+		}
+
+		else {
+			do{
+				*choice = rand() % 10;
+			}while ((square[*choice] == 'X' || square[*choice] == 'O') || *choice == 0);
+		*choice = *choice;
+		}
+		}
+		printf ("\n nilai com akhir %d",*choice);
 		getch ();
 	}
 
