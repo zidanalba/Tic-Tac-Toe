@@ -548,6 +548,7 @@ int main (){
 		}
 		if (exit == 2){
 			resetpapan(&pemenang);
+			player =1;
 			goto menu;
 		}
 }
@@ -1312,9 +1313,10 @@ void comhard (int *choice, int langkah){
 			}
 			printf ("kesini kok\n");
 			getch ();
+			goto tupatju;
 		}
 		else if ((square[1] == 'X' && square[4] == 'X') || (square[1] == 'X' && square[7] == 'X') || (square[4] == 'X' && square[7] == 'X')){
-			if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
+			tupatju : if ((square[1] == 'X' && square[4] == 'X') && square [7] == '7'){
 				*choice = 7;
 			}
 			else if ((square[1] == 'X' && square[7] == 'X') && square [4] == '4'){
@@ -1322,10 +1324,12 @@ void comhard (int *choice, int langkah){
 			}
 			if ((square[4] == 'X' && square[7] == 'X') && square [1] == '1'){
 				*choice = 1;
+				
 			}
+			goto wamapan;
 		}
 		else if ((square[2] == 'X' && square[5] == 'X') || (square[2] == 'X' && square[8] == 'X') || (square[5] == 'X' && square[8] == 'X')){
-			if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
+			wamapan : if ((square[2] == 'X' && square[5] == 'X') && square [8] == '8'){
 				*choice = 8;
 			}
 			else if ((square[2] == 'X' && square[8] == 'X') && square [5] == '5'){
@@ -1333,10 +1337,12 @@ void comhard (int *choice, int langkah){
 			}
 			if ((square[5] == 'X' && square[8] == 'X') && square [2] == '2'){
 				*choice = 2;
+				
 			}
+			goto ganamlan;
 		}
 		else if ((square[3] == 'X' && square[6] == 'X') || (square[3] == 'X' && square[9] == 'X') || (square[6] == 'X' && square[9] == 'X')){
-			if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
+			ganamlan : if ((square[3] == 'X' && square[6] == 'X') && square [9] == '9'){
 				*choice = 9;
 			}
 			else if ((square[3] == 'X' && square[9] == 'X') && square [6] == '6'){
@@ -1345,9 +1351,10 @@ void comhard (int *choice, int langkah){
 			if ((square[6] == 'X' && square[9] == 'X') && square [3] == '3'){
 				*choice = 3;
 			}
+			goto tumalan;
 		}
 		else if ((square[1] == 'X' && square[5] == 'X') || (square[1] == 'X' && square[9] == 'X') || (square[5] == 'X' && square[9] == 'X')){
-			if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
+			tumalan : if ((square[1] == 'X' && square[5] == 'X') && square [9] == '9'){
 				*choice = 9;
 			}
 			else if ((square[1] == 'X' && square[9] == 'X') && square [5] == '5'){
@@ -1356,9 +1363,10 @@ void comhard (int *choice, int langkah){
 			if ((square[5] == 'X' && square[9] == 'X') && square [1] == '1'){
 				*choice = 1;
 			}
+			goto  gamaju;
 		}
 		else if ((square[3] == 'X' && square[5] == 'X') || (square[3] == 'X' && square[7] == 'X') || (square[5] == 'X' && square[7] == 'X')){
-			if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
+			gamaju : if ((square[3] == 'X' && square[5] == 'X') && square [7] == '7'){
 				*choice = 7;
 			}
 			else if ((square[3] == 'X' && square[7] == 'X') && square [5] == '5'){
